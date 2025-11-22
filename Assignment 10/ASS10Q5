@@ -1,0 +1,41 @@
+#include <iostream>
+using namespace std;
+
+struct Node {
+    int data;
+    Node* next;
+};
+
+int main() {
+    Node* a = new Node{1, nullptr};
+    Node* b = new Node{2, nullptr};
+    Node* c = new Node{3, nullptr};
+    Node* d = new Node{4, nullptr};
+
+    a->next = b;
+    b->next = c;
+    c->next = d;
+    d->next = b;
+
+    Node* visited[100];
+    int k = 0;
+
+    Node* temp = a;
+    bool cycle = false;
+
+    while (temp != nullptr) {
+        for (int i = 0; i < k; i++) {
+            if (visited[i] == temp) {
+                cycle = true;
+                break;
+            }
+        }
+        if (cycle) break;
+        visited[k++] = temp;
+        temp = temp->next;
+    }
+
+    cout << (cycle ? "true" : "false");
+
+    return 0;
+}
